@@ -4,8 +4,8 @@ class Home extends React.Component {
   render() {
     return (
       <div>
-        <h1>Welcome Fellow Human!</h1>
-        <p>Login or Signup</p>
+        <h1>Welcome to our App!</h1>
+        <p>Login or Signup by clicking the links above</p>
       </div>
     );
   }
