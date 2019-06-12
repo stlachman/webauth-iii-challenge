@@ -22,6 +22,15 @@ function App() {
       });
   };
 
+  const loginUser = user => {
+    return axios
+      .post(`http://localhost:5000/api/login`, user)
+      .then(res => localStorage.setItem("token", res.data.token))
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
   return (
     <>
       <Navigation />
@@ -32,7 +41,11 @@ function App() {
           <Registration {...props} registerUser={registerUser} />
         )}
       />
-      <Route component={Login} path="/signin" />
+      <Route
+        path="/signin"
+        render={props => <Login {...props} loginUser={loginUser} />}
+      />
+
       <Route component={Users} path="/users" />
     </>
   );
