@@ -1,55 +1,74 @@
-import React, { useState } from "react";
+import React from "react";
+import axios from "axios";
 
-function Registration(props) {
-  const [state, setState] = useState({
+class Registration extends React.Component {
+  state = {
     username: "",
     password: "",
     department: ""
-  });
+  };
 
-  const handleChange = event => {
-    setState({
-      ...state,
-      [event.target.name]: event.target.value
+  render() {
+    return (
+      <div>
+        <h1>Register Below!</h1>
+        <form onSubmit={this.handleSubmit}>
+          <div>
+            <label htmlFor="username">Username</label>
+            <input
+              placeholder="Username"
+              onChange={this.handleChange}
+              value={this.state.username}
+              id="username"
+              type="text"
+            />
+          </div>
+          <div>
+            <label htmlFor="password">Password</label>
+            <input
+              placeholder="Password"
+              id="password"
+              onChange={this.handleChange}
+              value={this.state.password}
+              type="password"
+            />
+          </div>
+          <div>
+            <label htmlFor="department">Department</label>
+            <input
+              placeholder="Department"
+              onChange={this.handleChange}
+              value={this.state.department}
+              id="department"
+              type="text"
+            />
+          </div>
+          <button>Register</button>
+        </form>
+      </div>
+    );
+  }
+
+  handleChange = event => {
+    const { id, value } = event.target;
+    this.setState({
+      [id]: value
     });
   };
 
-  const handleSubmit = event => {
+  handleSubmit = event => {
     event.preventDefault();
-    props.registerUser(state).then(() => {
-      props.history.push("/users");
-    });
+    const endpoint = "http://localhost:5000/api/register";
+    axios
+      .post(endpoint, this.state)
+      .then(res => {
+        localStorage.setItem("token", res.data.token);
+        this.props.history.push("/users");
+      })
+      .catch(err => {
+        console.error(err);
+      });
   };
-
-  return (
-    <div>
-      <h1>Register Below!</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          placeholder="Username"
-          onChange={handleChange}
-          value={state.username}
-          name="username"
-          type="text"
-        />
-        <input
-          placeholder="Password"
-          onChange={handleChange}
-          value={state.password}
-          name="password"
-          type="password"
-        />
-        <input
-          placeholder="Department"
-          onChange={handleChange}
-          value={state.department}
-          name="department"
-          type="text"
-        />
-        <button>Register</button>
-      </form>
-    </div>
-  );
 }
 
 export default Registration;

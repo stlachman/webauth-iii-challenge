@@ -1,7 +1,13 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, withRouter } from "react-router-dom";
 
-const Navigation = () => {
+const logOut = (event, props) => {
+  event.preventDefault();
+  localStorage.removeItem("token");
+  props.history.push("/signin");
+};
+
+const Navigation = props => {
   return (
     <nav>
       <ul>
@@ -17,9 +23,12 @@ const Navigation = () => {
         <li>
           <NavLink to="/signup">Sign Up</NavLink>
         </li>
+        <li>
+          <button onClick={event => logOut(event, props)}>Logout</button>
+        </li>
       </ul>
     </nav>
   );
 };
 
-export default Navigation;
+export default withRouter(Navigation);

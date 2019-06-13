@@ -13,7 +13,8 @@ router.post("/register", validateRegistration, (req, res) => {
 
   Users.add(user)
     .then(savedUser => {
-      res.status(201).json(savedUser);
+      const token = generateToken(user);
+      res.status(201).json({ savedUser, token });
     })
     .catch(error => {
       res.status(500).json(error);

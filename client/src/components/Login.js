@@ -1,51 +1,58 @@
-import React, { useState } from "react";
+import React from "react";
+import axios from "axios";
 
-function Login(props) {
-  const [state, setState] = useState({
+class Login extends React.Component {
+  state = {
     username: "",
     password: ""
-  });
+  };
 
-  const handleChange = event => {
-    setState({
-      ...state,
-      [event.target.name]: event.target.value
+  render() {
+    return (
+      <div>
+        <h1>Login Below!</h1>
+        <form onSubmit={this.handleSubmit}>
+          <label htmlFor="username">Username</label>
+          <input
+            id="username"
+            value={this.state.username}
+            placeholder="username"
+            onChange={this.handleChange}
+            type="text"
+          />
+          <label htmlFor="password">Password</label>
+          <input
+            id="password"
+            value={this.state.password}
+            placeholder="password"
+            onChange={this.handleChange}
+            type="password"
+          />
+          <button>Log In</button>
+        </form>
+      </div>
+    );
+  }
+
+  handleChange = event => {
+    const { id, value } = event.target;
+    this.setState({
+      [id]: value
     });
   };
 
-  const handleSubmit = event => {
+  handleSubmit = event => {
     event.preventDefault();
-    props.loginUser(state).then(() => {
-      props.history.push("/users");
-    });
+    const endpoint = "http://localhost:5000/api/login";
+    axios
+      .post(endpoint, this.state)
+      .then(res => {
+        localStorage.setItem("token", res.data.token);
+        this.props.history.push("/users");
+      })
+      .catch(err => {
+        console.error(err);
+      });
   };
-
-  return (
-    <div>
-      <h1>Login Below!</h1>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="username">Username</label>
-        <input
-          id="username"
-          name="username"
-          value={state.username}
-          placeholder="username"
-          onChange={handleChange}
-          type="text"
-        />
-        <label htmlFor="password">Password</label>
-        <input
-          id="password"
-          name="password"
-          value={state.password}
-          placeholder="password"
-          onChange={handleChange}
-          type="password"
-        />
-        <button>Log In</button>
-      </form>
-    </div>
-  );
 }
-
 export default Login;
