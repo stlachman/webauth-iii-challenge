@@ -8,9 +8,12 @@ import Login from "./components/Login.js";
 import Registration from "./components/Registration.js";
 import PrivateRoute from "./components/PrivateRoute.js";
 
+import { GlobalStyle } from "./styles";
+
 function App() {
   return (
     <>
+      <GlobalStyle />
       <Navigation />
       <Route component={Home} exact path="/" />
       <Route path="/signup" component={Registration} />

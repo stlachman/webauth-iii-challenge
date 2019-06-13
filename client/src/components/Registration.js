@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 
+import { Container } from "../styles";
 class Registration extends React.Component {
   state = {
     username: "",
@@ -10,7 +11,7 @@ class Registration extends React.Component {
 
   render() {
     return (
-      <div>
+      <Container>
         <h1>Register Below!</h1>
         <form onSubmit={this.handleSubmit}>
           <div>
@@ -45,7 +46,7 @@ class Registration extends React.Component {
           </div>
           <button>Register</button>
         </form>
-      </div>
+      </Container>
     );
   }
 
