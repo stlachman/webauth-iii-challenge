@@ -15,12 +15,14 @@ const NavBar = styled.nav`
   padding: 20px 15px;
 `;
 
-const NavContainer = styled.ul`
-  margin: 0;
+const NavColumn = styled.div`
+  display: flex;
+  align-items: center;
+  flex: 2;
 `;
 
-const NavColumn = styled.div`
-  flex: 2;
+const NavContainer = styled.ul`
+  margin: 0;
 `;
 
 const NavItem = styled.li`
