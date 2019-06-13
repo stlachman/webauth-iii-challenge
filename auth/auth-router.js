@@ -45,7 +45,8 @@ router.post("/login", (req, res) => {
 function generateToken(user) {
   const payload = {
     subject: user.id, // standard claim = sub
-    username: user.username // additional data
+    username: user.username, // additional data
+    department: user.department
   };
 
   const options = {

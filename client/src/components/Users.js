@@ -14,7 +14,7 @@ class Users extends React.Component {
     axios
       .get(endpoint)
       .then(res => this.setState(() => ({ users: res.data })))
-      .catch(err => console.log(err));
+      .catch(({ response }) => console.error(response));
   }
 
   render() {
@@ -25,7 +25,14 @@ class Users extends React.Component {
         <ul>
           {this.state.users &&
             this.state.users.map(u => {
-              return <li key={u.id}>{u.username}</li>;
+              return (
+                <li key={u.id}>
+                  <ul>
+                    <li>Department: {u.department}</li>
+                    <li>Name: {u.username}</li>
+                  </ul>
+                </li>
+              );
             })}
         </ul>
       </div>

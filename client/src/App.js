@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { Route } from "react-router-dom";
-import axios from "axios";
 
 import Navigation from "./components/Navigation.js";
 import Home from "./components/Home.js";
 import Users from "./components/Users.js";
 import Login from "./components/Login.js";
 import Registration from "./components/Registration.js";
+import PrivateRoute from "./components/PrivateRoute.js";
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
       <Route path="/signup" component={Registration} />
       <Route path="/signin" component={Login} />
 
-      <Route component={Users} path="/users" />
+      <PrivateRoute component={Users} path="/users" />
     </>
   );
 }
